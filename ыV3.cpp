@@ -13,36 +13,38 @@ using namespace std;
 class Multiplicator
 {
 public:
-    unsigned long long int n1;
-    unsigned long long int n2;
-    unsigned long long int k ;
-    vector <unsigned long long int> arr1;
-    vector <unsigned long long int> arr2;
+    int n1;
+    int n2;
+    int k ;
+    vector <int> arr1;
+    vector <int> arr2;
 
-    Multiplicator(unsigned long long int k )
+    Multiplicator(int k )
     {
 
         cout << "size of n1: " << k << endl;
 
         //cin >> k;
 
-        n1 = generator(k);
-        arr1 = turner(n1,k);
+        arr1 = generator(k);
 
-        cout <<"n1 = " << n1 << endl;
+        cout <<"n1 = ";
+        show_vector(arr1);
+        cout << endl;
         cout << "size of n2: " << k;
 
         //cin >> k;
 
-        n2 = generator(k);
-        arr2 = turner(n2,k);
+        arr2 = generator(k);
 
-        cout <<endl << "n2 = " << n2 <<endl;
+        cout <<endl << "n2 = ";
+        show_vector(arr1);
+        cout << endl;
     }
 
-    unsigned long long int pow (unsigned long long int a, unsigned long long int b)
+    int pow (int a, int b)
     {
-        unsigned long long int x = 1;
+        int x = 1;
 
         for(int i = 0; i < b; i++)
         {
@@ -52,16 +54,18 @@ public:
         return x;
     }
 
-    unsigned long long int generator(unsigned long long int k)
+    vector<int> generator(int k)
     {
-        unsigned long long int n = 0;
-        n = ((rand() % ((pow(10,k-1))) + (pow(10,k-1))));
-        return n;
+        vector<int> bob;
+        int n;
+        n = rand() % 10 + 1;
+        bob.push_back(n);
+        return bob;
     }
 
-    vector<unsigned long long int> turner(unsigned long long int x, unsigned long long int k)
+    vector<int> turner(int x, int k)
     {
-        vector <unsigned long long int> arr;
+        vector <int> arr;
 
         for(int i = 0; i < k; i++)
         {
@@ -72,7 +76,7 @@ public:
         return arr;
     }
 
-    vector<unsigned long long int> equaller(vector<unsigned long long int> x, vector<unsigned long long int> y)
+    vector<int> equaller(vector<int> x, vector<int> y)
     {
         int maxi = max(x.size(),y.size());
         int mini = min(x.size(),y.size());
@@ -83,19 +87,20 @@ public:
         return y;
     }
 
-    void show_vector( vector<unsigned long long int>&a)
+    void show_vector( vector<int> &a)
     {
-        for (vector<unsigned long long int>::iterator it = a.begin() ; it!=a.end() ; ++it)
+        for (vector<int>::iterator it = a.begin() ; it!=a.end() ; ++it)
         cout<<*it;
     }
 
 
 
-    unsigned long long int pillar( vector<unsigned long long int> x, vector<unsigned long long int> y )
+    int pillar( vector<int> x, vector<int> y )
     {
-        unsigned long long int sum = 0;
-        unsigned long long int flag = 0;
-        unsigned long long int flag2 = 0;
+        int sum = 0;
+        int temp = 0;
+        int flag = 0;
+        int flag2 = 0;
 
         if(x.size() > y.size())
         {
@@ -105,24 +110,68 @@ public:
         {
             x = equaller(y,x);
         }
-        vector<unsigned long long int> bob(x.size());
-        vector<unsigned long long int> dlc(x.size());
+        vector<int> bob(x.size());
+        vector<int> dlc(x.size());
 
 
         for(int i = x.size()-1; i >= 0; i--)
         {
             for( int j = y.size()-1; j >= 0; j-- )
             {
-                bob[i] = y[j] * x[i];
+                bob[j] += y[j] * x[i];
+         //       if
             }
         }
 
         return sum;
     }
 
-    vector<unsigned long long int> dividerHalfOne (vector<unsigned long long int> x)
+    vector<int> addition (vector<int> x, vector<int> y)
     {
-        vector<unsigned long long int> arr;
+        x = equaller(x,y);
+        y = equaller(x,y);
+        x.insert(x.begin(), 0);
+        y.insert(y.begin(), 0);
+        vector<int> bob (x.size());
+
+        for(int i = x.size(); i > 0; i--)
+        {
+            bob[i] = x[i] + y[i];
+
+            if(bob[i] > 9)
+            {
+                bob[i-1] ++;
+                bob[i] %= 10;
+            }
+        }
+
+        if(bob[0] == 0)
+            bob.erase(bob.begin());
+        return bob;
+    }
+
+    vector <int> multiplication (vector <int> x, vector <int> y)
+    {
+        vector <int> bob(2);
+
+        bob[1] = x[0] * y[0];
+
+        if(bob[1] > 9)
+        {
+            bob[0] = bob[1] / 10;
+            bob[1] %= 10;
+        }
+        else
+        {
+            bob.erase(bob.begin());
+        }
+    }
+
+
+
+    vector<int> dividerHalfOne (vector<int> x)
+    {
+        vector<int> arr;
 
         for(int i = 0; i < x.size()/2; i++)
         {
@@ -132,9 +181,9 @@ public:
         return arr;
     }
 
-    vector<unsigned long long int> dividerHalfTwo (vector<unsigned long long int> x)
+    vector<int> dividerHalfTwo (vector<int> x)
     {
-        vector<unsigned long long int> arr;
+        vector<int> arr;
 
             for(int i = x.size()/2; i < x.size(); i++)
             {
@@ -144,11 +193,11 @@ public:
         return arr;
     }
 
-    unsigned long long int divideAndConquier (vector<unsigned long long int> x, vector<unsigned long long int> y)
+    vector <int> divideAndConquier (vector<int> x, vector<int> y)
     {
         if(x.size() == 1 && y.size() == 1)
         {
-            return ((x[0])) * ((y[0]));
+            return multiplication(x,y);
         }
         else
         {
@@ -177,17 +226,36 @@ public:
           //          x = equaller(y,x);
         //        }
           //  }
-            vector<unsigned long long int> al = dividerHalfOne(x);
-            vector<unsigned long long int> ar = dividerHalfTwo(x);
-            vector<unsigned long long int> bl = dividerHalfOne(y);
-            vector<unsigned long long int> br = dividerHalfTwo(y);
+            vector<int> al = dividerHalfOne(x);
+            vector<int> ar = dividerHalfTwo(x);
+            vector<int> bl = dividerHalfOne(y);
+            vector<int> br = dividerHalfTwo(y);
 
-            unsigned long long int x1 =  divideAndConquier(al,bl);
-            unsigned long long int x2 =  divideAndConquier(al,br);
-            unsigned long long int x3 =  divideAndConquier(ar,bl);
-            unsigned long long int x4 =  divideAndConquier(ar,br);
+            vector <int> x1 =  divideAndConquier(al,bl);
+            vector <int> x2 =  divideAndConquier(al,br);
+            vector <int> x3 =  divideAndConquier(ar,bl);
+            vector <int> x4 =  divideAndConquier(ar,br);
+            for(int i = 0; i < x.size(); i++)
+            {
+                x1.push_back(0);
+            }
 
-            return x1 * (pow(10,x.size())) + (x2 + x3) * (pow(10, x.size()/2)) + x4;
+            vector <int> x2plusx3;
+
+            x2plusx3 = addition(x2,x3);
+
+            for(int i = 0; i < x.size()/2; i++)
+            {
+                x2plusx3.push_back(0);
+            }
+
+            vector <int> sum;
+
+            sum = addition(x1,x2plusx3);
+            sum = addition(sum,x4);
+
+
+            return sum;
         }
     }
 };
@@ -201,7 +269,7 @@ int main()
     {
     Multiplicator s(i);
 
-    unsigned long long x;
+    int x;
     int time1 = clock();
 
     cout << s.pillar((s.arr1),(s.arr2)) << endl;
@@ -210,8 +278,12 @@ int main()
     cout << "Pillar method required " << (float)(clock() - time1)/CLOCKS_PER_SEC << " seconds." << endl;
 
     int time2 = clock();
+    vector <int> bob;
+    bob = s.divideAndConquier(s.arr1,s.arr2);
+    s.show_vector(bob);
 
-    cout << s.divideAndConquier((s.arr1),(s.arr2)) << endl;
+    //s.show_vector(s.divideAndConquier((s.arr1),(s.arr2)));
+    cout << endl;
 //    time2 = clock();
 
     cout << "Divide and Coquier method required " <<(float)(clock() - time2)/CLOCKS_PER_SEC << " seconds." << endl;
