@@ -10,7 +10,7 @@ using namespace std;
 
 
 template <typename T>
-vector<T> countingSort(vector<T>& a, vector<T>& b, int k)
+vector<T> countingSort(vector<T>& a, vector<T>& b, T k)
 {
     vector <T> c(k);
     for(int i = 0; i < k; i++)
@@ -262,6 +262,109 @@ int main()
         file2 << i << " " << ((float)(time2 - time1)/CLOCKS_PER_SEC  + (float)(time4 - time3)/CLOCKS_PER_SEC + (float)(time6 - time5)/CLOCKS_PER_SEC) /3<< '\n';
         arr2.clear();
     }
+
+
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////
+    ofstream file3;
+    file3.open("countingSortTime.txt");
+    file3 << "integers" << '\n';
+    for(int i = 10; i < 10000;i += 20)
+    {
+        vector<int> arr1;
+        vector<int> arr2;
+        for(int j = 0; j < i; j++)
+        {
+            arr1.push_back(rand()%100);
+            arr2.push_back(rand()%100);
+        }
+        int time1 = clock();
+        cout << 2;
+        arr1 = countingSort( arr1,arr2,101 );
+        int time2 = clock();
+        ////////////////////
+        arr1.clear();
+        arr2.clear();
+        for(int j = 0; j < i; j++)
+        {
+            arr1.push_back(rand()%100);
+            arr2.push_back(rand()%100);
+        }
+        int time3 = clock();
+        cout << 22;
+        arr1 = countingSort( arr1,arr2,101 );
+        int time4 = clock();
+        /////////
+        ////////////////////
+        arr1.clear();
+        arr2.clear();
+        for(int j = 0; j < i; j++)
+        {
+            arr1.push_back(rand()%100);
+            arr2.push_back(rand()%100);
+        }
+        int time5 = clock();
+        cout << 22;
+        arr1 = countingSort( arr1,arr2,101 );
+        int time6 = clock();
+        /////////
+        file3 << i << " " << ((float)(time2 - time1)/CLOCKS_PER_SEC  + (float)(time4 - time3)/CLOCKS_PER_SEC + (float)(time6 - time5)/CLOCKS_PER_SEC) /3<< '\n';
+        arr2.clear();
+        arr1.clear();
+
+    }
+
+  /*  file3 << "strings" << '\n';
+
+    for(int i = 10; i < 300;i += 20)
+    {
+        vector<char> arr2;
+        vector<char> arr1;
+        for(int j = 0; j < i; j++)
+        {
+            arr1.push_back(rand()%'z' + 'a');
+            arr2.push_back(rand()%'z' + 'a');
+        }
+        int time1 = clock();
+        cout << 22;
+        arr1 = countingSort(arr1,arr2,'A');
+        int time2 = clock();
+        ////////////////////
+        arr1.clear();
+        arr2.clear();
+        for(int j = 0; j < i; j++)
+        {
+            arr1.push_back(rand()%'z' + 'a');
+            arr2.push_back(rand()%'z' + 'a');
+        }
+        int time3 = clock();
+        cout << 22;
+        arr1 = countingSort(arr1,arr2,'A');
+        int time4 = clock();
+        /////////
+        ////////////////////
+        arr1.clear();
+        arr2.clear();
+        for(int j = 0; j < i; j++)
+        {
+            arr1.push_back(rand()%'z' + 'a');
+            arr2.push_back(rand()%'z' + 'a');
+        }
+        int time5 = clock();
+        cout << 22;
+        arr1 = countingSort(arr1,arr2,'A');
+        int time6 = clock();
+        /////////
+        ////////////////////
+        arr1.clear();
+        arr2.clear();
+        /////////
+        file2 << i << " " << ((float)(time2 - time1)/CLOCKS_PER_SEC  + (float)(time4 - time3)/CLOCKS_PER_SEC + (float)(time6 - time5)/CLOCKS_PER_SEC) /3<< '\n';
+    }*/
+
+
+
+
 
 	return 0;
 }
